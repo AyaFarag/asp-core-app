@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebApplicationAPI.DTO;
+using WebApplicationAPI.Service.Product;
 
 namespace WebApplicationAPI.Controllers
 {
@@ -8,31 +9,48 @@ namespace WebApplicationAPI.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        // default 
 
-        // custmizatioon
+        // Dependancy Injection
+        public IProductService ProductService;
+        public ProductController(IProductService _ProductService)
+        {
+            ProductService = _ProductService;   
+        }
+
+        [HttpGet]
+        public IActionResult get()
+        {
+            var products = ProductService.getAllProducts();
+            return Ok(products);
+        }
 
         [HttpGet("{id}")]
         public void getProduct([FromRoute] int id)
         {
-
+            ProductService.getAllProducts();
+            // response
         }
 
 
         [HttpPost("create")]
-        public void createProduct([FromForm] CreateProductDTO dTO)
+        public IActionResult createProduct([FromForm] CreateProductDTO dTO)
         {
-            // value // 
-            // Product p = new Product();
-
-            // return context.users.select(a=> new { responseDTO l})
+            var product = ProductService.createProduct(dTO);
+            return Ok(product);
         }
 
         [HttpPut("update")]
-        public void update([FromQuery] int id, [FromBody] UpdateProductDTO dto)
+        public IActionResult update([FromQuery] int id, [FromBody] UpdateProductDTO dto)
         {
-            // logic
-            // response
+            var product = ProductService.updateProduct(id, dto);
+            return Ok(product);
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult delete(int id)
+        {
+            var result = ProductService.deleteProduct(id);
+            return Ok(result);
         }
     }
 }
