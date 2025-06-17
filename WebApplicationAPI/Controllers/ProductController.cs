@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebApplicationAPI.DTO;
 using WebApplicationAPI.Service.Product;
+using WebApplicationAPI.Validation;
 
 namespace WebApplicationAPI.Controllers
 {
@@ -35,6 +37,17 @@ namespace WebApplicationAPI.Controllers
         [HttpPost("create")]
         public IActionResult createProduct([FromForm] CreateProductDTO dTO)
         {
+            var vaidator = new ProductValidator();
+            var result = vaidator.Validate(dTO);
+            if (!result.IsValid) 
+            { 
+                foreach (var errors in result.Errors) 
+                {
+                    return BadRequest(errors);    
+                }
+            
+            }
+
             var product = ProductService.createProduct(dTO);
             return Ok(product);
         }

@@ -2,6 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using WebApplicationAPI.Data;
 using WebApplicationAPI.Repository.Product;
 using WebApplicationAPI.Service.Product;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using WebApplicationAPI.Validation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +22,15 @@ builder.Services.AddTransient<IProductService, ProductService>();
 
 
 builder.Services.AddAutoMapper(typeof(Program));
+
+// Register FluentValidation
+builder.Services.AddValidatorsFromAssemblyContaining<ProductValidator>();
+
+
+
+// Add FluentValidation to MVC
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddFluentValidationClientsideAdapters();
 
 // -----------------------------------------------------------------------------------
 var app = builder.Build();
