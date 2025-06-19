@@ -1,9 +1,12 @@
-using Microsoft.EntityFrameworkCore;
-using WebApplicationAPI.Data;
-using WebApplicationAPI.Repository.Product;
-using WebApplicationAPI.Service.Product;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using WebApplicationAPI.Data;
+using WebApplicationAPI.Repository;
+using WebApplicationAPI.Repository.Category;
+using WebApplicationAPI.Repository.Product;
+using WebApplicationAPI.Service.Category;
+using WebApplicationAPI.Service.Product;
 using WebApplicationAPI.Validation;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,8 +20,14 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 builder.Services.AddTransient<IProductRepository, ProductRepository>();
+
 builder.Services.AddTransient<IProductService, ProductService>();
+
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
+builder.Services.AddTransient<ICategoryService, CategoryService>();
 
 
 builder.Services.AddAutoMapper(typeof(Program));

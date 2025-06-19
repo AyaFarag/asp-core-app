@@ -17,11 +17,13 @@ namespace WebApplicationAPI.Service.Product
             _mapper = mapper;
         }
 
-        public string createProduct(CreateProductDTO Productdto)
+        public string createProduct(CreateProductCategoryDTO Productdto)
         {
-            // mapping dto - product
+            // logic
+            // create product with new category
+            // DTO with relation using automapper to table
             var product = _mapper.Map<Model.Product>(Productdto);
-            // repository.create ( product )
+            
            return  Repository.create(product);
 
         }

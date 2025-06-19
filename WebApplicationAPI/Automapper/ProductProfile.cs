@@ -8,7 +8,7 @@ namespace WebApplicationAPI.Automapper
     {
         public ProductProfile()
         {
-            CreateMap<Product, CreateProductDTO>().ReverseMap();
+            CreateMap<Product, CreateProductCategoryDTO>().ReverseMap();
             CreateMap<Product, UpdateProductDTO>().ReverseMap();
             CreateMap<Product, ProductResponseDTO>().ReverseMap();
 

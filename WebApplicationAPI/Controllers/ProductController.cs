@@ -35,7 +35,7 @@ namespace WebApplicationAPI.Controllers
 
 
         [HttpPost("create")]
-        public IActionResult createProduct([FromForm] CreateProductDTO dTO)
+        public IActionResult createProduct([FromBody] CreateProductCategoryDTO dTO)
         {
             var vaidator = new ProductValidator();
             var result = vaidator.Validate(dTO);
