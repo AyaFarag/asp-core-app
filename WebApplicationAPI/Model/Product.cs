@@ -10,10 +10,10 @@ namespace WebApplicationAPI.Model
         public int qty { get; set; }
         public float price { get; set; }
 
-        [ForeignKey("Category")]
-        public int category_id { get; set; }
-        [ForeignKey("category_id")]
-        public Category Category { get; set; }
+       // [ForeignKey("Category")]
+       // public int category_id { get; set; }
+       // [ForeignKey("category_id")]
+       // public Category Category { get; set; }
 
     }
 }

@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebApplicationAPI.DTO;
@@ -7,6 +8,7 @@ using WebApplicationAPI.Validation;
 
 namespace WebApplicationAPI.Controllers
 {
+    
     [Route("api/[controller]")]
     [ApiController]
     public class ProductController : ControllerBase
@@ -33,7 +35,7 @@ namespace WebApplicationAPI.Controllers
             // response
         }
 
-
+        [Authorize]
         [HttpPost("create")]
         public IActionResult createProduct([FromBody] CreateProductCategoryDTO dTO)
         {
@@ -51,7 +53,7 @@ namespace WebApplicationAPI.Controllers
             var product = ProductService.createProduct(dTO);
             return Ok(product);
         }
-
+        [Authorize]
         [HttpPut("update")]
         public IActionResult update([FromQuery] int id, [FromBody] UpdateProductDTO dto)
         {
@@ -59,6 +61,7 @@ namespace WebApplicationAPI.Controllers
             return Ok(product);
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public IActionResult delete(int id)
         {
