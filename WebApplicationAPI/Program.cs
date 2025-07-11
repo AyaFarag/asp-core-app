@@ -9,6 +9,7 @@ using System.Configuration;
 using System.Text;
 using WebApplicationAPI.Data;
 using WebApplicationAPI.Extentions;
+using WebApplicationAPI.Model;
 using WebApplicationAPI.Repository;
 using WebApplicationAPI.Repository.Category;
 using WebApplicationAPI.Repository.Product;
@@ -68,7 +69,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+builder.Services.AddIdentity<UserModel, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
@@ -144,6 +145,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

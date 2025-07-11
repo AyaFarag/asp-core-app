@@ -2,8 +2,10 @@
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using WebApplicationAPI.Extentions;
+using WebApplicationAPI.Model;
 
 namespace WebApplicationAPI.Service.Auth
 {
@@ -13,10 +15,10 @@ namespace WebApplicationAPI.Service.Auth
         private readonly string? _validIssuer;
         private readonly string? _validAudience;
         private readonly double _expires;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<UserModel> _userManager;
 
         public TokenService(IConfiguration configuration,
-            UserManager<IdentityUser> userManager)
+            UserManager<UserModel> userManager)
 
         {
             _userManager = userManager;
@@ -33,9 +35,13 @@ namespace WebApplicationAPI.Service.Auth
         }
 
 
-        public async Task<string> GenerateToken(IdentityUser user)
+        public async Task<string> GenerateToken(UserModel user)
         {
             // steps to generate token
+            
+            // header
+            // payload
+            // signature
 
             var singingCredentials = new SigningCredentials(_secretKey, SecurityAlgorithms.HmacSha256);
             var claims = await GetClaimsAsync(user);
@@ -44,7 +50,7 @@ namespace WebApplicationAPI.Service.Auth
             return new JwtSecurityTokenHandler().WriteToken(tokenOptions); // token string
         }
 
-        private async Task<List<Claim>> GetClaimsAsync(IdentityUser user)
+        private async Task<List<Claim>> GetClaimsAsync(UserModel user)
         {
             var claims = new List<Claim>
             {
@@ -71,6 +77,17 @@ namespace WebApplicationAPI.Service.Auth
                 signingCredentials: signingCredentials
             );
         }
+
+        public string GenerateRefreshToken()
+        {
+            var randomNumber = new byte[64];
+            using var rng = RandomNumberGenerator.Create();
+            rng.GetBytes(randomNumber);
+
+            var refreshToken = Convert.ToBase64String(randomNumber);
+            return refreshToken;
+        }
+
 
     }
 }

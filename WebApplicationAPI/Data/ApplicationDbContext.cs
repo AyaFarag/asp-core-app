@@ -5,7 +5,7 @@ using WebApplicationAPI.Model;
 
 namespace WebApplicationAPI.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<IdentityUser , IdentityRole , string>
+    public class ApplicationDbContext : IdentityDbContext<UserModel, IdentityRole , string>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

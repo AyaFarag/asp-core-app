@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using WebApplicationAPI.DTO;
+using WebApplicationAPI.Model;
 
 namespace WebApplicationAPI.Automapper
 {
@@ -8,9 +9,9 @@ namespace WebApplicationAPI.Automapper
     {
         public UserProfile()
         {
-            CreateMap<UserRegisterRequest , IdentityUser>().ReverseMap();
-            CreateMap<UserResponse, IdentityUser>().ReverseMap();
-            CreateMap<UserLoginRequest, IdentityUser>().ReverseMap();
+            CreateMap<UserRegisterRequest , UserModel>().ReverseMap();
+            CreateMap<UserResponse, UserModel>().ReverseMap();
+            CreateMap<UserLoginRequest, UserModel>().ReverseMap();
 
 
         }

@@ -35,7 +35,7 @@ namespace WebApplicationAPI.Controllers
             // response
         }
 
-        [Authorize]
+        [Authorize(Roles = "Seller")]
         [HttpPost("create")]
         public IActionResult createProduct([FromBody] CreateProductCategoryDTO dTO)
         {
